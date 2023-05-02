@@ -5,10 +5,11 @@ import Catagory from "../pages/Home/Catagory/Catagory";
 import NewaLayout from "../layout/NewaLayout";
 import News from "../pages/News/News";
 
-import About from "../pages/About/About";
+
 import LogInLayOut from "../layout/LogInLayOut";
 import LogIn from "../pages/LogIn/Login/LogIn";
 import Register from "../pages/LogIn/Register/Register";
+import PrivateRoutes from "./PrivateRoutes";
 
 
 
@@ -58,7 +59,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: ':id',
-                element: <News></News>,
+                element: <PrivateRoutes><News></News></PrivateRoutes>,
                 loader: ({ params }) => fetch(`http://localhost:5000/news/${params.id}`)
             },
         ]

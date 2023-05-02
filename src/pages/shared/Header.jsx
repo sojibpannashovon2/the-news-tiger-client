@@ -10,8 +10,18 @@ import { FaUserSecret } from "react-icons/fa";
 
 const Header = () => {
 
-    const { user2 } = useContext(authContext)
+    const { user, logOut } = useContext(authContext)
     // console.log(name);
+
+    const handleLogoutButton = () => {
+        logOut()
+            .then(() => {
+                alert("Sign-Out Successfully")
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
     return (
         <Container>
             <div className='text-center'>
@@ -47,19 +57,23 @@ const Header = () => {
                         </Nav>
                         <Nav className='d-flex justify-content-center align-items-center fw-bold'>
                             {
-                                user2 && <Nav.Link href="#deets"><FaUserSecret style={{ fontSize: "2rem" }}></FaUserSecret></Nav.Link>
+                                user && <Nav.Link href="#deets"><FaUserSecret style={{ fontSize: "2rem" }}></FaUserSecret></Nav.Link>
                             }
                             <Nav.Link eventKey={2} href="#memes">
                                 {
-                                    user2 ? <Button variant="secondary">Log-Out</Button> :
+                                    user ? <><span>{user.email}</span><Button variant="secondary" onClick={handleLogoutButton}>Log-Out</Button></> :
 
                                         <Link to="/login">
+
                                             <Button variant="secondary">Log-In</Button>
                                         </Link>
                                 }
 
 
                             </Nav.Link>
+                            {
+                                user && <p> <img style={{ height: "50px", width: "50px" }} src={user.photoURL} alt="" /></p>
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

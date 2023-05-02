@@ -4,13 +4,14 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+console.log(import.meta.env.VITE_ApiKey)
 const firebaseConfig = {
-    apiKey: "AIzaSyDQJYfKd-e8BtY83-CDuRYIVWWE7zMbHNY",
-    authDomain: "the-news-tiger-client.firebaseapp.com",
-    projectId: "the-news-tiger-client",
-    storageBucket: "the-news-tiger-client.appspot.com",
-    messagingSenderId: "1028188508587",
-    appId: "1:1028188508587:web:1c1a046c79f613dd8242ee"
+    apiKey: import.meta.env.VITE_ApiKey,
+    authDomain: import.meta.env.VITE_AuthDomain,
+    projectId: import.meta.env.VITE_ProjectId,
+    storageBucket: import.meta.env.VITE_StorageBucket,
+    messagingSenderId: import.meta.env.VITE_MessagingSenderId,
+    appId: import.meta.env.VITE_AppId
 };
 
 // Initialize Firebase

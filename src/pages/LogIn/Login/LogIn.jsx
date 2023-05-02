@@ -1,14 +1,47 @@
 // import React from 'react';
+import { useContext, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { authContext } from '../../../providers/AuthProvider';
 
 const LogIn = () => {
+    const { signIn } = useContext(authContext);
+
+    const [success, setSuccess] = useState(null);
+    const [error, setError] = useState(null)
+
+    const navigate = useNavigate();
+    const location = useLocation()
+
+    const from = location?.state?.from?.pathname || '/catagory/0'
+
+    const handleLogInSubmittButton = (event) => {
+        event.preventDefault();
+        const form = event.target;
+
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+        form.reset();
+        signIn(email, password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                setSuccess("Successfully Register !!!");
+                navigate(from, { replace: true })
+            })
+            .catch(error => {
+                console.log(error);
+                setError(error.message)
+            })
+
+    }
     return (
         <Container style={{ width: "25rem" }} className=' mx-auto my-5 card p-5 shadow-lg border border-info'>
             <h2 className="mb-3 text-center fw-bold">PLEASE LOG-IN</h2>
-            <Form>
+            <Form onSubmit={handleLogInSubmittButton}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" name='email' placeholder="Enter email" required />
@@ -33,12 +66,12 @@ const LogIn = () => {
             </Form>
             <div className='text-center'>
                 <Form.Text className="text-sucess ">
-                    text-sucess
+                    {success}
                 </Form.Text>
                 <br />
-                <br />
+
                 <Form.Text className="text-danger">
-                    text-danger
+                    {error}
                 </Form.Text>
             </div>
         </Container>
